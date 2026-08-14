@@ -1,0 +1,39 @@
+<a class="back-link" routerLink="/teams">← Volver a Equipos</a>
+
+<div *ngIf="message" class="message" [class.error]="isError">{{ message }}</div>
+
+<h2>Equipo: {{ team?.name }}</h2>
+
+<h3>Ligas</h3>
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nombre</th>
+      <th>País</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let league of leagues">
+      <td>{{ league.id }}</td>
+      <td>{{ league.name }}</td>
+      <td>{{ league.country }}</td>
+      <td>
+        <button class="delete" (click)="removeLeague(league.id)">Quitar</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>Agregar Liga</h3>
+<form [formGroup]="form" (ngSubmit)="addLeague()">
+  <div class="form-group">
+    <label for="leagueId">Liga</label>
+    <select id="leagueId" formControlName="leagueId">
+      <option value="">Seleccione una liga</option>
+      <option *ngFor="let league of availableLeagues" [value]="league.id">{{ league.name }}</option>
+    </select>
+  </div>
+  <button type="submit" class="success">Agregar</button>
+</form>

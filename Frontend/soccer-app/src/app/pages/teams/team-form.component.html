@@ -1,0 +1,39 @@
+<div *ngIf="message" class="message" [class.error]="isError">{{ message }}</div>
+
+<h2>{{ isEdit ? 'Editar Equipo' : 'Nuevo Equipo' }}</h2>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label for="name">Nombre</label>
+    <input id="name" type="text" formControlName="name" />
+    <div *ngIf="form.get('name')?.invalid && form.get('name')?.touched" class="error">
+      El nombre es obligatorio y debe tener entre 2 y 50 caracteres.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="country">País</label>
+    <input id="country" type="text" formControlName="country" />
+    <div *ngIf="form.get('country')?.invalid && form.get('country')?.touched" class="error">
+      El país es obligatorio y debe tener entre 2 y 50 caracteres.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="playersQuantity">Cantidad de jugadores</label>
+    <input id="playersQuantity" type="number" formControlName="playersQuantity" />
+    <div *ngIf="form.get('playersQuantity')?.invalid && form.get('playersQuantity')?.touched" class="error">
+      La cantidad de jugadores debe estar entre 11 y 22.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>
+      <input type="checkbox" formControlName="enabled" />
+      Enabled
+    </label>
+  </div>
+
+  <button type="submit" class="success">{{ isEdit ? 'Actualizar' : 'Crear' }}</button>
+  <a class="btn-link" routerLink="/teams">Cancelar</a>
+</form>
