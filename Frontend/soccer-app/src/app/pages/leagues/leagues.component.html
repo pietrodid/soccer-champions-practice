@@ -1,0 +1,35 @@
+<div class="page-title">
+  <h2>Ligas</h2>
+  <a class="btn-link success" routerLink="/leagues/new">Nueva Liga</a>
+</div>
+
+<div *ngIf="message" class="message" [class.error]="isError">{{ message }}</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nombre</th>
+      <th>País</th>
+      <th>Fecha Inicio</th>
+      <th>Fecha Fin</th>
+      <th>Enabled</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let league of leagues">
+      <td>{{ league.id }}</td>
+      <td>{{ league.name }}</td>
+      <td>{{ league.country }}</td>
+      <td>{{ league.startDate | date: 'dd/MM/yyyy' }}</td>
+      <td>{{ league.endDate | date: 'dd/MM/yyyy' }}</td>
+      <td>{{ league.enabled ? 'Sí' : 'No' }}</td>
+      <td>
+        <a class="btn-link" [routerLink]="['/leagues/edit', league.id]">Editar</a>
+        <a class="btn-link" [routerLink]="['/leagues', league.id, 'teams']">Ver Equipos</a>
+        <button class="delete" (click)="deleteLeague(league.id)">Eliminar</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

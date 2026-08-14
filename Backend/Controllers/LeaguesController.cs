@@ -16,14 +16,13 @@ public class LeaguesController : ControllerBase
         _context = context;
     }
 
-    // GET /api/leagues
+
     [HttpGet]
     public async Task<ActionResult<IEnumerable<League>>> GetAll()
     {
         return await _context.Leagues.ToListAsync();
     }
 
-    // GET /api/leagues/{id}
     [HttpGet("{id:int}")]
     public async Task<ActionResult<League>> GetById(int id)
     {
@@ -37,7 +36,7 @@ public class LeaguesController : ControllerBase
         return league;
     }
 
-    // POST /api/leagues
+   
     [HttpPost]
     public async Task<ActionResult<League>> Create(League league)
     {
@@ -65,7 +64,6 @@ public class LeaguesController : ControllerBase
         return CreatedAtAction(nameof(GetById), new { id = league.Id }, league);
     }
 
-    // PUT /api/leagues/{id}
     [HttpPut("{id:int}")]
     public async Task<IActionResult> Update(int id, League league)
     {
@@ -102,7 +100,7 @@ public class LeaguesController : ControllerBase
         return NoContent();
     }
 
-    // DELETE /api/leagues/{id}
+  
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete(int id)
     {
@@ -113,7 +111,6 @@ public class LeaguesController : ControllerBase
             return NotFound("League not found.");
         }
 
-        // Borro las relaciones primero porque la FK no me deja borrar la liga
         var relations = _context.LeagueTeams.Where(lt => lt.LeagueId == id);
         _context.LeagueTeams.RemoveRange(relations);
         _context.Leagues.Remove(league);
@@ -122,7 +119,7 @@ public class LeaguesController : ControllerBase
         return NoContent();
     }
 
-    // GET /api/leagues/{leagueId}/teams
+
     [HttpGet("{leagueId:int}/teams")]
     public async Task<ActionResult<IEnumerable<Team>>> GetTeams(int leagueId)
     {
@@ -141,7 +138,6 @@ public class LeaguesController : ControllerBase
         return teams;
     }
 
-    // POST /api/leagues/{leagueId}/teams/{teamId}
     [HttpPost("{leagueId:int}/teams/{teamId:int}")]
     public async Task<IActionResult> AddTeam(int leagueId, int teamId)
     {
@@ -173,7 +169,6 @@ public class LeaguesController : ControllerBase
         return NoContent();
     }
 
-    // DELETE /api/leagues/{leagueId}/teams/{teamId}
     [HttpDelete("{leagueId:int}/teams/{teamId:int}")]
     public async Task<IActionResult> RemoveTeam(int leagueId, int teamId)
     {

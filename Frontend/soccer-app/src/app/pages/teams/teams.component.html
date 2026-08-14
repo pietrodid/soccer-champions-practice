@@ -1,0 +1,33 @@
+<div class="page-title">
+  <h2>Equipos</h2>
+  <a class="btn-link success" routerLink="/teams/new">Nuevo Equipo</a>
+</div>
+
+<div *ngIf="message" class="message" [class.error]="isError">{{ message }}</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nombre</th>
+      <th>País</th>
+      <th>Jugadores</th>
+      <th>Enabled</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let team of teams">
+      <td>{{ team.id }}</td>
+      <td>{{ team.name }}</td>
+      <td>{{ team.country }}</td>
+      <td>{{ team.playersQuantity }}</td>
+      <td>{{ team.enabled ? 'Sí' : 'No' }}</td>
+      <td>
+        <a class="btn-link" [routerLink]="['/teams/edit', team.id]">Editar</a>
+        <a class="btn-link" [routerLink]="['/teams', team.id, 'leagues']">Ver Ligas</a>
+        <button class="delete" (click)="deleteTeam(team.id)">Eliminar</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

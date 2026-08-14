@@ -1,59 +1,56 @@
-# SoccerApp
+# Guía rápida para correr el proyecto (Soccer Champions)
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.21.
+Hola! Dejo esta guía paso a paso por si sos un tercero o evaluador que recibe este proyecto y quiere levantarlo desde cero en su máquina local. Intenté dejar las instrucciones lo más claras y directas posible.
 
-## Development server
+---
 
-To start a local development server, run:
+## 1. Requisitos previos (Instalar primero)
 
-```bash
-ng serve
-```
+Antes de empezar, vas a necesitar tener instalado lo siguiente:
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+| **.NET 8 SDK** | https://dotnet.microsoft.com/download | 8.x |
+| **Node.js** | https://nodejs.org | 18 o superior (v20 recomendada) |
+| **SQL Server** | https://www.microsoft.com/sql-server | Express o Developer Edition |
 
-## Code scaffolding
+> **Nota:** No hace falta instalar Angular CLI de forma global (`npm install -g @angular/cli`), ya que el proyecto incluye Angular como dependencia local.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Para comprobar que todo se instaló bien, podés abrir una terminal y correr:
 
 ```bash
-ng generate --help
+dotnet --version      
+node --version        
+npm --version         
+
+2. Crear la base de datos
+Abre SQL Server Management Studio (SSMS).
+Conectate a tu servidor local.
+Asegúrate de tener activada la Autenticación Mixta (SQL Server and Windows Authentication mode) en las propiedades del servidor.
+Abre el archivo Database/database.sql y ejecutalo (F5).
+Esto crea la base de datos SoccerDB con sus tablas, restricciones y datos iniciales.
+
+3. Levantar el Backend (API)
 ```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
+cd Backend
+dotnet restore
+dotnet run
 ```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
+La API queda en http://localhost:5000
+Swagger (para probar endpoints): http://localhost:5000/swagger
+Importante: si tu SQL Server no se llama `localhost`, editá el archivo
+`Backend/appsettings.json`:
 ```
+"DefaultConnection": "Server=localhost;Database=SoccerDB;Trusted_Connection=True;TrustServerCertificate=True;"
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
+4. Levantar el Frontend (Angular)
 ```
+cd Frontend/soccer-app
+npm install        # instala todas las dependencias (tarda un par de minutos)
+npm start
+```
+La app queda en http://localhost:4200
+> Si `npm start` fallara por el comando `ng`, usá `npx ng serve`.
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Urls Finales:
 
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Aplicación Angular: http://localhost:4200
+Swagger de la API: http://localhost:5000/swagger
